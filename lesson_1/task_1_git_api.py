@@ -17,6 +17,19 @@ for i in range(len(data)):
    count += 1
 print(f'Всего {count} репозиториев')
 
+'''
+1 -Python-Data-Science-Numpy-Matplotlib-Scikit-learn
+2 Data-collection-and-processing-methods
+3 homework1
+4 homework_3
+5 homework_4
+6 project_database
+7 Python_For_DataScience
+8 SQL
+9 SQL_homework5
+Всего 9 репозиториев
+'''
+
 
 
 
