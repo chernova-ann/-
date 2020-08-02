@@ -107,11 +107,11 @@ def parse_vacancies(source):
     return vacancies 
     #print(f'Счетчик: {count}')
     
-hh_df = pd.DataFrame(parse_vacancies('hh'))
+hh_df = parse_vacancies('hh')
 # print('hh обработан')
-sj_df = pd.DataFrame(parse_vacancies('sj'))
+sj_df = parse_vacancies('sj')
 
-vacancies_df = hh_df.append(sj_df, ignore_index = True)
+vacancies_df = pd.DataFrame(hh_df + sj_df)
 
 print(vacancies_df)
 
