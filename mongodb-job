@@ -1,3 +1,4 @@
+# Задание 3.
 #1) Развернуть у себя на компьютере/виртуальной машине/хостинге MongoDB и реализовать функцию,
 # записывающую собранные вакансии в созданную БД
 # 2) Написать функцию, которая производит поиск и выводит на экран вакансии с заработной платой больше введенной суммы.
@@ -120,7 +121,14 @@ hh = parse_vacancies('hh')
 # print('hh обработан')
 sj = parse_vacancies('sj')
 
-job_df = pd.DataFrame(hh + sj)
+job_hh = pd.DataFrame(hh)
+job_sj = pd.DataFrame(sj)
+job_df = pd.concat([job_hh, job_sj])
+
+# Задание №3. MongoDB.
+#1) Развернуть у себя на компьютере/виртуальной машине/хостинге MongoDB и реализовать функцию,
+# записывающую собранные вакансии в созданную БД
+
 
 client = MongoClient('127.0.0.1', 27017)
 db = client['job_db']
@@ -128,14 +136,22 @@ c_vacancies = db.vacancies
 
 job_df.reset_index(inplace=True)
 data_dict = job_df.to_dict('records') # Добавление фрейма в базу.
+#pprint(data_dict)
 
-def add_new_vacancy(collection, new_data):                             # Функия добавляет новые вакансии в коллекцию.
-    for vac in new_data:                                               # Cравнивает по ссылке, если ссылки свпадают, то заменить на новый документ
-        collection.replace_one({'link': vac['link']}, vac, True)
-        return collection.find({})
+# 3) Написать функцию, которая будет добавлять в вашу базу данных только новые вакансии с сайта.
+def add_new_vacancy(collection, new_data):
+    for vac in new_data:
+        collection.replace_one({'link': vac['link']}, vac, upsert=True)
+    return collection.find({})
 
-new_vacancy = add_new_vacancy(c_vacancies, data_dict)                       # В базе есть один раз добавленные данные.
-c_vacancies.insert_many(new_vacancy)
+new_vacancy = add_new_vacancy(c_vacancies, data_dict)
 
-for vacancy in c_vacancies.find({}):
-    print(vacancy)
+#for vacancy in new_vacancy:
+# print(vacancy)
+
+# 2) Написать функцию, которая производит поиск и выводит на экран вакансии с заработной платой больше введенной суммы.
+# Поиск по двум полям (мин и макс зарплату)
+pay_job = int(input('Введите желаемую зарплату: '))
+
+for vacancy in c_vacancies.find({'$or':[{'salary_min': {'$gt' : pay_job}}, {'salary_max': {'$gt' :pay_job}}]}):
+   print(vacancy)
