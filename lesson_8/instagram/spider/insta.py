@@ -10,8 +10,8 @@ class InstaSpider(scrapy.Spider):
     name = 'insta'
     allowed_domains = ['www.instagram.com']
     start_urls = ['https://www.instagram.com/']
-    insta_login = "all_life_an"
-    insta_pwd = "#PWD_INSTAGRAM_BROWSER:10:1598785567:AZNQAPBKFmn8AvYaUQ834V1YH/bI5/DC2U7E6vYJ3EFJhPc73dabVXSuGOTfP09wltV1QhFuspmKIpzqPuit3q6+si/xc/DWM6hML93ydWyizQ+e9Fs7z4RDrSv5Vdqbo0iTdjHvVFfe7z+V"
+    insta_login = ""
+    insta_pwd = ""
     insta_login_link = "https://www.instagram.com/accounts/login/ajax/"
 
     parse_users = ['depinjoy_','chernovasia']
